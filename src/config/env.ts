@@ -1,4 +1,4 @@
-import "dotenv";
+import "dotenv/config";
 
 interface Env {
     JWT_SECRET: string;
@@ -11,7 +11,7 @@ function getEnvVar(key: string): string {
     const value = process.env[key];
 
     if (!value) {
-        console.error("[env] Environment variable required missing: ${key}");
+        console.error(`[env] Environment variable required missing: ${key}`);
         process.exit(1);
     }
 
