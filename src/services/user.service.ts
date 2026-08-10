@@ -21,5 +21,14 @@ export async function createUser({ name, email, password }: CreateUserInput) {
         if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
             throw new AppError(409, "Email already registered");
         }
+        throw error;
     }
+}
+
+export async function findUserByEmail(email: string) {
+    return prisma.user.findUnique({ where: { email } });
+}
+
+export async function findUserById(id: string) {
+    return prisma.user.findUnique({ where: { id } });
 }
