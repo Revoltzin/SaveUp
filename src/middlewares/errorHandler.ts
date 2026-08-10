@@ -1,8 +1,20 @@
 import { Request, Response, NextFunction } from "express";
+import { ZodError } from "zod";
 import AppError from "../errors/AppError";
 
 export function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {
     console.log(err);
+
+    if (err instanceof ZodError) {
+        return res.status(400).json({
+            message: "Validation error",
+            errors: err.issues.map((issue) => ({
+                path: issue.path.join("."),
+                message: issue.message,
+            })),
+        });
+    }
+
     if (err instanceof AppError) return res.status(err.statusCode).json({ message: err.message });
 
     res.status(500).json({ message: "Internal Server Error" });
