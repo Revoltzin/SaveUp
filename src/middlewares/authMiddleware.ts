@@ -15,9 +15,8 @@ export function authJwt(req: Request, res: Response, next: NextFunction) {
     }
 
     try {
-        //const data = verifyToken(token);
-        // Quando eu realmente for precisar da variavel data eu tiro os comentarios
-        verifyToken(token);
+        const data = verifyToken(token);
+        req.user = data;
         next();
     } catch (error) {
         console.error(error);
