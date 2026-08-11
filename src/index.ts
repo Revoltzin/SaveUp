@@ -2,8 +2,11 @@ import express from "express";
 import { errorHandler } from "./middlewares/errorHandler";
 import env from "./config/env";
 import routes from "./routes/routes";
+import { globalLimiter } from "./middlewares/rateLimiter";
 
 const app = express();
+
+app.use(globalLimiter);
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
