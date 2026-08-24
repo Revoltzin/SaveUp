@@ -5,6 +5,8 @@ import routes from "./routes/routes";
 import rateLimiterGlobal from "./middlewares/rateLimiterGlobal";
 
 const app = express();
+
+app.use(globalLimiter);
 app.use(express.json());
 app.use(rateLimiterGlobal);
 
