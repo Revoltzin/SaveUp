@@ -1,11 +1,10 @@
 import { Router } from "express";
 import { register, login } from "../controllers/auth.controller";
-import { authLimiter } from "../middlewares/rateLimiter";
+import rateLimiterAuth from "../middlewares/rateLimiterAuth";
 
 const authRoutes = Router();
 
-authRoutes.use(authLimiter);
-authRoutes.post("/register", register);
-authRoutes.post("/login", login);
+authRoutes.post("/register", rateLimiterAuth, register);
+authRoutes.post("/login", rateLimiterAuth, login);
 
 export default authRoutes;
