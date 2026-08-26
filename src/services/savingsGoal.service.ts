@@ -6,7 +6,7 @@ interface CreateSavingsGoalInput {
     userId: string;
     name: string;
     targetAmount: number;
-    deadline?: Date;
+    deadline?: Date | undefined;
 }
 
 interface UpdateSavingsGoalInput {
