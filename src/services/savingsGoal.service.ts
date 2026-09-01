@@ -6,14 +6,14 @@ interface CreateSavingsGoalInput {
     userId: string;
     name: string;
     targetAmount: number;
-    deadline?: Date;
+    deadline?: Date | undefined;
 }
 
 interface UpdateSavingsGoalInput {
-    name?: string;
-    targetAmount?: number;
-    deadline?: Date | null;
-    status?: GoalStatus;
+    name?: string | undefined;
+    targetAmount?: number | undefined;
+    deadline?: Date | null | undefined;
+    status?: GoalStatus | undefined;
 }
 
 export async function createSavingsGoal({ userId, name, targetAmount, deadline }: CreateSavingsGoalInput) {
@@ -44,7 +44,12 @@ export async function updateSavingsGoal(id: string, userId: string, data: Update
 
     return prisma.savingsGoal.update({
         where: { id },
-        data,
+        data: {
+            ...(data.name !== undefined && { name: data.name }),
+            ...(data.targetAmount !== undefined && { targetAmount: data.targetAmount }),
+            ...(data.deadline !== undefined && { deadline: data.deadline }),
+            ...(data.status !== undefined && { status: data.status }),
+        },
     });
 }
 
