@@ -6,8 +6,16 @@ import {
     updateSavingsGoal,
     deleteSavingsGoal,
 } from "../services/savingsGoal.service";
+import { getGoalCurrentAmount } from "../services/contribution.service";
+import { SavingsGoal } from "../generated/prisma/client";
 import { Request, Response } from "express";
 import AppError from "../errors/AppError";
+
+async function withCurrentAmount(goal: SavingsGoal, userId: string) {
+    const { _sum } = await getGoalCurrentAmount(goal.id, userId);
+
+    return { ...goal, currentAmount: _sum.amount?.toString() ?? "0" };
+}
 
 export async function create(req: Request, res: Response) {
     const userId = req.user?.sub;
@@ -26,9 +34,11 @@ export async function list(req: Request, res: Response) {
 
     if (!userId) throw new AppError(401, "Not Authenticated");
 
-    const listGoal = await listSavingsGoalsByUser(userId);
+    const goals = await listSavingsGoalsByUser(userId);
 
-    res.status(200).json(listGoal);
+    const goalsWithAmount = await Promise.all(goals.map((goal) => withCurrentAmount(goal, userId)));
+
+    res.status(200).json(goalsWithAmount);
 }
 
 export async function getById(req: Request<{ id: string }>, res: Response) {
@@ -40,7 +50,7 @@ export async function getById(req: Request<{ id: string }>, res: Response) {
 
     const goal = await getSavingsGoalById(id, userId);
 
-    res.status(200).json(goal);
+    res.status(200).json(await withCurrentAmount(goal, userId));
 }
 
 export async function update(req: Request<{ id: string }>, res: Response) {
