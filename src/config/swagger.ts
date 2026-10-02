@@ -1,4 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
+import env from "./env";
 
 const swaggerSpec = swaggerJSDoc({
     definition: {
@@ -9,7 +10,12 @@ const swaggerSpec = swaggerJSDoc({
             description:
                 "Backend da SaveUp — app de decisões financeiras e metas de economia gamificadas.",
         },
-        servers: [{ url: "/", description: "Servidor atual" }],
+        servers: [
+            {
+                url: `http://localhost:${env.PORT}`,
+                description: "Servidor da API (porta diferente da UI do Swagger)",
+            },
+        ],
         components: {
             securitySchemes: {
                 bearerAuth: {

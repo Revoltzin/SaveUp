@@ -1,5 +1,9 @@
 import app from "./app";
+import docsApp from "./docsServer";
 import env from "./config/env";
 
-const PORT = env.PORT ?? 3000;
-app.listen(PORT, () => console.log("Server Online"));
+app.listen(env.PORT, () => console.log(`Server Online on http://localhost:${env.PORT}`));
+
+docsApp.listen(env.DOCS_PORT, () =>
+    console.log(`Swagger docs on http://localhost:${env.DOCS_PORT}/docs`),
+);
