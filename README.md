@@ -79,6 +79,8 @@ Valores monetários são sempre `Decimal`, nunca `Float` — evitando erros de a
 
 ## 🔌 Endpoints disponíveis
 
+> 📘 Documentação interativa (Swagger UI) disponível em [`/docs`](http://localhost:3000/docs) com o servidor rodando — dá pra testar os endpoints direto pelo navegador.
+
 ### Autenticação (públicos)
 
 | Método | Rota | Descrição |
@@ -167,8 +169,9 @@ O servidor sobe em `http://localhost:3000`. `GET /health` confirma que está no 
 - [x] **Fase 2** — CRUD do domínio principal (`SavingsGoal` e `Contribution`), com auditoria de segurança e testes manuais completos
 - [ ] **Fase 3** — CRUD de `Transaction`, `Category` e `Budget`
 - [ ] **Fase 4** — Camada de gamificação (a peça central da proposta do app)
-- [ ] **Fase 5** — Testes automatizados
-- [ ] **Fase 6** — Documentação de API formal (ex: OpenAPI/Swagger) e preparação para deploy
+- [x] **Fase 5** — Testes automatizados (Vitest + Supertest, banco de teste isolado, cobrindo auth, autorização/IDOR e CRUD completo)
+- [x] **Fase 6a** — Documentação de API formal (Swagger/OpenAPI, disponível em `/docs`)
+- [ ] **Fase 6b** — Preparação para deploy (Dockerfile da aplicação, CI, hospedagem)
 - [ ] **Futuro** — Recomendações inteligentes com IA
 - [ ] **Futuro** — Aplicativo mobile (frontend)
 
