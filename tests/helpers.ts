@@ -24,3 +24,12 @@ export async function createGoal(token: string, overrides: Record<string, unknow
 
     return res.body.id as string;
 }
+
+export async function createCategory(token: string, overrides: Record<string, unknown> = {}) {
+    const res = await request(app)
+        .post("/categories")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ name: "Categoria", type: "EXPENSE", ...overrides });
+
+    return res.body.id as string;
+}
