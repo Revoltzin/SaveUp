@@ -56,6 +56,16 @@ const swaggerSpec = swaggerJSDoc({
                         createdAt: { type: "string", format: "date-time" },
                     },
                 },
+                Category: {
+                    type: "object",
+                    properties: {
+                        id: { type: "string", format: "uuid" },
+                        userId: { type: "string", format: "uuid" },
+                        name: { type: "string" },
+                        type: { type: "string", enum: ["INCOME", "EXPENSE"] },
+                        icon: { type: "string", nullable: true },
+                    },
+                },
                 Error: {
                     type: "object",
                     properties: {
