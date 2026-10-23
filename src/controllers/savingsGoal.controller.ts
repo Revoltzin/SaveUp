@@ -26,7 +26,7 @@ export async function create(req: Request, res: Response) {
 
     const goal = await createSavingsGoal({ userId, name, targetAmount, deadline });
 
-    res.status(201).json(goal);
+    res.status(201).json(await withCurrentAmount(goal, userId));
 }
 
 export async function list(req: Request, res: Response) {
@@ -64,7 +64,7 @@ export async function update(req: Request<{ id: string }>, res: Response) {
 
     const updatedGoal = await updateSavingsGoal(id, userId, data);
 
-    res.status(200).json(updatedGoal);
+    res.status(200).json(await withCurrentAmount(updatedGoal, userId));
 }
 
 export async function remove(req: Request<{ id: string }>, res: Response) {
